@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 def map_process(process):
 	return {
@@ -19,4 +20,10 @@ def get_pid(process):
 	return process['pid']
 	
 if __name__ == '__main__':
-	print [get_pid(p) for p in get_java_processes()]
+	if len(sys.argv) < 2:
+		print "Usage: java.py <java_selector>"
+		print ""
+		print "Example: java.py Resin"
+		sys.exit(1)
+	print sys.argv
+	print [get_pid(p) for p in get_java_processes() if p['args'].find(sys.argv[1]) != -1]
