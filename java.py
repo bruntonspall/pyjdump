@@ -29,7 +29,9 @@ if __name__ == '__main__':
 			print "%d\t%s\t%s\t%s" % (index,process['pid'],process['cmd'],process['args'])
 		process = raw_input('Pick One: ')
 		if process:
-			print get_pid(processlist[int(process)])
-			
+			pid = get_pid(processlist[int(process)])
+			popen = subprocess.Popen(['jmap', '-dump:file=dmp', pid], stdout=subprocess.PIPE)
+			stdout,stderr = popen.communicate()
+			print stdout			
 	else:
 		print get_pid(processlist[0])
