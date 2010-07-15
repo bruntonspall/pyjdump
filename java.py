@@ -20,10 +20,16 @@ def get_pid(process):
 	return process['pid']
 	
 if __name__ == '__main__':
-	if len(sys.argv) < 2:
-		print "Usage: java.py <java_selector>"
+	processlist = get_java_processes()
+	if len(processlist) > 1:
+		print "Pick one"
 		print ""
-		print "Example: java.py Resin"
-		sys.exit(1)
-	print sys.argv
-	print [get_pid(p) for p in get_java_processes() if p['args'].find(sys.argv[1]) != -1]
+		print "OPTION\tPID\tCMD\tARGS"
+		for index,process in enumerate(processlist):
+			print "%d\t%s\t%s\t%s" % (index,process['pid'],process['cmd'],process['args'])
+		process = raw_input('Pick One: ')
+		if process:
+			print get_pid(processlist[int(process)])
+			
+	else:
+		print get_pid(processlist[0])
