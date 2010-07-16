@@ -10,7 +10,10 @@ def map_process(process):
 	}
 	
 def get_processlist():
-	return [map_process(l.split()) for l in subprocess.Popen(['ps', 'aux'], stdout=subprocess.PIPE).stdout.readlines()]
+	l = []
+	for i in subprocess.Popen(['ps', 'aux'], stdout=subprocess.PIPE).stdout.readlines():
+		l.append(map_process(i.split()))
+	return l
 	
 def get_java_processes():
 	ps = get_processlist()
